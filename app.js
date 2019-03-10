@@ -18,7 +18,8 @@ app.use(cors());
 const index = new router();
 
 index.get('/', function (ctx, next) {
-    ctx.body = "Essence Editor Server is Online"
+    ctx.status = 200;
+    ctx.body = "Essence Editor Server is Online";
 });
 
 app.use(index.routes()).use(index.allowedMethods());
