@@ -4,7 +4,13 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "koa": "^2.7.0"
+    "@koa/cors": "^2.2.3",
+    "dotenv": "^6.2.0",
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.0",
+    "koa-cors": "0.0.16",
+    "koa-orm": "^2.3.2",
+    "koa-router": "^7.4.0"
   },
   "devDependencies": {},
   "scripts": {
