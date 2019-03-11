@@ -10,7 +10,8 @@
     "koa-body": "^4.1.0",
     "koa-cors": "0.0.16",
     "koa-orm": "^2.3.2",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "mysql2": "^1.6.5"
   },
   "devDependencies": {},
   "scripts": {

@@ -5,6 +5,8 @@ const router = require('koa-router');
 const koabody = require('koa-body');
 const cors = require('@koa/cors');
 
+const { Method, Alpha, Intention } = require('./res/sequalize');
+
 app.use(koabody({
     // formidable:{
     //     uploadDir: __dirname + '/public/uploads', // directory where files will be uploaded
