@@ -4,15 +4,20 @@ const MONGO_URL = "mongodb://localhost:27017";
 const Koa = require('koa');
 const app = new Koa();
 const router = require('koa-router');
-const koabody = require('koa-body');
+var bodyParser = require('koa-bodyparser');
 const cors = require('@koa/cors');
 const db = require('./res/mongo');
 const ObjectID = require("mongodb").ObjectID;
+require('koa-qs')(app, 'strict')
 
-app.use(koabody({
+app.use(bodyParser({
+    detectJSON: function (ctx) {
+        return /\.json$/i.test(ctx.path);
+    },
+    extendTypes: {
+        json: ['application/x-javascript'] // will parse application/x-javascript type body as a JSON string
+    },
 
-    multipart: true,
-    urlencoded: true,
 }));
 app.use(cors());
 
@@ -40,7 +45,10 @@ index.get("/method", async (ctx) => {
 index.get("/method/:id", async (ctx) => {
     await MongoClient.connect(MONGO_URL, { useNewUrlParser: true })
         .then(async (connection) => {
-            await connection.db("essence").collection('method').findOne({"_id": ObjectID(ctx.params.id)}).then((result) => {
+            await connection.db("essence")
+                .collection('method')
+                .findOne({"_id": ObjectID(ctx.params.id)})
+                .then((result) => {
                 console.log("Database connection established")
                 ctx.body = JSON.stringify(result)
             }).catch((err) => console.error(err));
@@ -67,12 +75,20 @@ index.put("/method/:id", async (ctx) => {
 });
 
 index.post("/method", async (ctx) => {
+    console.log(ctx.request.body)
     await MongoClient.connect(MONGO_URL, { useNewUrlParser: true })
         .then(async (connection) => {
-            await connection.db("essence").collection('method').insertOne(ctx.request.body).then((result) => {
-                console.log("Database connection established")
+            await connection.db("essence")
+                .collection('method')
+                .insertOne(ctx.request.body)
+                .then((result) => {
+                console.log("Created Data Method")
+
                 ctx.body = JSON.stringify(result)
-            }).catch((err) => console.error(err));
+            }).catch((err) => {
+                console.error(err)
+
+            });
 
 
         })
